@@ -20,4 +20,8 @@ variable "site_bucket_name" {
 
 variable "redirect_bucket_names" {
   default = {
-    "zengech.com"       =
+    "zengech.com"       = "zengech-com-redirect"
+    "www.zengech.com"   = "zengech-www-com-redirect"
+    "www.zengech.co.uk" = "zengech-www-co-uk-redirect"
+  }
+}

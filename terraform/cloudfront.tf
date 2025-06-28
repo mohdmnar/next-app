@@ -4,7 +4,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   comment             = "${var.project_name} CloudFront Distribution"
   default_root_object = "index.html"
 
-  aliases = [var.domain_primary] ++ var.domain_alternatives
+  aliases = concat([var.domain_primary], var.domain_alternatives)
 
   origin {
     domain_name = aws_s3_bucket.site.website_endpoint
