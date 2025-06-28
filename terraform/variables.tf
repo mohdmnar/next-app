@@ -28,14 +28,16 @@ variable "redirect_bucket_names" {
 }
 
 variable "domain_alternatives_json" {
-  type = string
+  description = "Domain aliases (JSON string from secrets)"
+  type        = string
 }
 
 variable "redirect_bucket_names_json" {
-  type = string
+  description = "Redirect bucket mapping (JSON string from secrets)"
+  type        = string
 }
 
 locals {
-  domain_alternatives     = jsondecode(var.domain_alternatives_json)
-  redirect_bucket_names   = jsondecode(var.redirect_bucket_names_json)
+  domain_alternatives    = jsondecode(var.domain_alternatives_json)
+  redirect_bucket_names  = jsondecode(var.redirect_bucket_names_json)
 }
