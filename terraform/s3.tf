@@ -6,7 +6,10 @@ resource "aws_s3_bucket" "site" {
     error_document = "index.html"
   }
 
-  force_destroy = true
+  lifecycle {
+    prevent_destroy = false
+    ignore_changes = [bucket]
+  }
 }
 
 resource "aws_s3_bucket_policy" "public_read" {
@@ -34,5 +37,8 @@ resource "aws_s3_bucket" "redirects" {
     redirect_all_requests_to = "https://${var.domain_primary}"
   }
 
-  force_destroy = true
+  lifecycle {
+    prevent_destroy = false
+    ignore_changes = [bucket]
+  }
 }
