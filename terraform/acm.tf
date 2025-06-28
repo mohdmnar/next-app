@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "zengech" {
-  provider = aws.us_east_1
+  provider = aws.eu_west_2
 
   domain_name               = var.domain_primary
   subject_alternative_names = var.domain_alternatives
@@ -35,7 +35,7 @@ resource "aws_route53_record" "cert_validation" {
 }
 
 resource "aws_acm_certificate_validation" "zengech" {
-  provider                = aws.us_east_1
+  provider                = aws.eu_west_2
   certificate_arn         = aws_acm_certificate.zengech.arn
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
