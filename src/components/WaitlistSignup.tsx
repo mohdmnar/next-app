@@ -31,9 +31,9 @@ export function WaitlistSignup() {
           <div className="max-w-2xl mx-auto text-center">
             <div className="mb-8 animate-fade-in-up">
               <CheckCircle className="h-16 w-16 text-green-400 mx-auto mb-4 animate-fade-in-down" />
-              <h2 className="mb-4 text-white">You're on the waitlist! 🎉</h2>
+              <h2 className="mb-4 text-white">You&apos;re on the waitlist! 🎉</h2>
               <p className="text-lg text-slate-300 mb-6">
-                Welcome to the Zengech waitlist. We'll notify you as soon as early access is available.
+                Welcome to the Zengech waitlist. We&apos;ll notify you as soon as early access is available.
               </p>
               <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur-sm hover-lift">
                 <h3 className="mb-3 text-white">What happens next?</h3>

@@ -1,3 +1,4 @@
+
 variable "project_name" {
   default = "zengech"
 }
@@ -24,4 +25,17 @@ variable "redirect_bucket_names" {
     "www.zengech.com"   = "zengech-www-com-redirect"
     "www.zengech.co.uk" = "zengech-www-co-uk-redirect"
   }
+}
+
+variable "domain_alternatives_json" {
+  type = string
+}
+
+variable "redirect_bucket_names_json" {
+  type = string
+}
+
+locals {
+  domain_alternatives     = jsondecode(var.domain_alternatives_json)
+  redirect_bucket_names   = jsondecode(var.redirect_bucket_names_json)
 }

@@ -105,7 +105,7 @@ export function Footer() {
           <div className="bg-gradient-to-r from-purple-950/50 to-orange-950/50 border border-slate-700 rounded-xl p-6 backdrop-blur-sm">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-medium mb-2 text-white">See what's next</h4>
+                <h4 className="font-medium mb-2 text-white">See what&apos;s next</h4>
                 <p className="text-slate-400 text-sm">
                   Explore our roadmap and upcoming features
                 </p>

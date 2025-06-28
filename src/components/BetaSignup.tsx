@@ -32,9 +32,9 @@ export function BetaSignup() {
           <div className="max-w-2xl mx-auto text-center">
             <div className="mb-8 animate-fade-in-up">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-              <h2 className="mb-4">You're in! 🎉</h2>
+              <h2 className="mb-4">You&apos;re in! 🎉</h2>
               <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
-                Welcome to the Zengech beta. We'll send you early access details soon.
+                Welcome to the Zengech beta. We&apos;ll send you early access details soon.
               </p>
               <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
                 <h3 className="mb-3">What happens next?</h3>

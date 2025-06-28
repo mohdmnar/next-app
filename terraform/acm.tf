@@ -2,7 +2,7 @@ resource "aws_acm_certificate" "zengech" {
   provider = aws.eu_west_2
 
   domain_name               = var.domain_primary
-  subject_alternative_names = var.domain_alternatives
+  subject_alternative_names = local.domain_alternatives
   validation_method         = "DNS"
 
   lifecycle {

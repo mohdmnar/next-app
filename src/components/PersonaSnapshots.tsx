@@ -62,7 +62,7 @@ export function PersonaSnapshots() {
             Built for every role in modern infrastructure
           </h2>
           <p className="max-w-2xl mx-auto text-lg text-slate-300">
-            Whether you're a startup founder or enterprise architect, Zengech adapts to your workflow and scales with your needs.
+            Whether you&apos;re a startup founder or enterprise architect, Zengech adapts to your workflow and scales with your needs.
           </p>
         </div>
         
@@ -111,7 +111,7 @@ export function PersonaSnapshots() {
         {/* Mobile Scroll */}
         <div className="lg:hidden">
           <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide">
-            {personas.map((persona, index) => {
+            {personas.map((persona) => {
               const IconComponent = persona.icon
               return (
                 <div

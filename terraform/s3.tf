@@ -26,7 +26,7 @@ resource "aws_s3_bucket_policy" "public_read" {
 }
 
 resource "aws_s3_bucket" "redirects" {
-  for_each = var.redirect_bucket_names
+  for_each = local.redirect_bucket_names
 
   bucket = each.value
 
