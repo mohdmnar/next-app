@@ -1,14 +1,13 @@
 'use client'
-import '../styles/globals.css'
 
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
-import { Hero } from '../components/Hero'
-import { TrustSignals } from '../components/TrustSignals'
-import { FeatureHighlights } from '../components/FeatureHighlights'
-import { PersonaSnapshots } from '../components/PersonaSnapshots'
-import { WaitlistSignup } from '../components/WaitlistSignup'
-import { Footer } from '../components/Footer'
+import { Hero } from './components/Hero'
+import { TrustSignals } from './components/TrustSignals'
+import { FeatureHighlights } from './components/FeatureHighlights'
+import { PersonaSnapshots } from './components/PersonaSnapshots'
+import { WaitlistSignup } from './components/WaitlistSignup'
+import { Footer } from './components/Footer'
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('')
@@ -80,9 +79,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="p-10">
-  <h1 className="text-xl font-bold text-primary">Hello Tailwind</h1>
-</div>
       {/* Navigation - Enhanced with mobile menu */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,26 +1,759 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap');
 @import "tailwindcss";
-
+@custom-variant dark (&:is(.dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-size: 16px;
+  
+  /* Zengech Purple-Orange Brand Colors */
+  --primary: #8B5CF6;
+  --primary-foreground: #ffffff;
+  --secondary: #F97316;
+  --secondary-foreground: #ffffff;
+  --accent: #10B981;
+  --accent-foreground: #ffffff;
+  
+  /* Dark Mode Backgrounds (Default) */
+  --background: #0F0F23;
+  --foreground: #F8FAFC;
+  --card: #1E1B2E;
+  --card-foreground: #F8FAFC;
+  
+  /* Text Colors for Dark Mode */
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  
+  /* Borders & UI for Dark Mode */
+  --border: #2D2A3E;
+  --input: #1E1B2E;
+  --input-background: #1E1B2E;
+  --input-border: #2D2A3E;
+  --input-border-focus: #8B5CF6;
+  
+  /* Shadows for Dark Mode */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+  
+  /* Other tokens */
+  --radius: 0.5rem;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  
+  /* Animation */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 400ms ease-in-out;
+  --transition-bounce: 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition-smooth: 350ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Light mode override (optional) */
+.light {
+  --background: #F9FAFB;
+  --foreground: #1F2937;
+  --card: #FFFFFF;
+  --card-foreground: #1F2937;
+  --text-primary: #1F2937;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+  --border: #E5E7EB;
+  --input: #FFFFFF;
+  --input-background: #FFFFFF;
+  --input-border: #E5E7EB;
+  --input-border-focus: #8B5CF6;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 @theme inline {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: var(--font-size);
+    scroll-behavior: smooth;
+    /* Improve touch scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+  }
+
+  .font-mono {
+    font-family: 'Fira Code', ui-monospace, SFMono-Regular, Consolas, monospace;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/**
+ * Base typography with Inter font system - Responsive
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: 3rem;
+      font-weight: var(--font-weight-bold);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+
+    h2 {
+      font-size: 1.875rem;
+      font-weight: var(--font-weight-bold);
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: var(--font-weight-bold);
+      line-height: 1.3;
+      color: var(--text-primary);
+    }
+
+    h4 {
+      font-size: 1.25rem;
+      font-weight: var(--font-weight-medium);
+      line-height: 1.4;
+      color: var(--text-primary);
+    }
+
+    p {
+      font-size: 1rem;
+      font-weight: var(--font-weight-normal);
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    label {
+      font-size: 0.875rem;
+      font-weight: var(--font-weight-medium);
+      line-height: 1.4;
+      color: var(--text-primary);
+    }
+
+    button {
+      font-size: 1rem;
+      font-weight: var(--font-weight-medium);
+      line-height: 1.4;
+    }
+
+    input, textarea {
+      font-size: 1rem;
+      font-weight: var(--font-weight-normal);
+      line-height: 1.4;
+    }
+  }
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--primary);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary);
+  }
+}
+
+@keyframes buttonPress {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes morphToDiagram {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.9) rotate(180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes morphToCode {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floatUp {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes codeLineAppear {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+    width: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    width: auto;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.4s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-button-press {
+  animation: buttonPress 0.15s ease-in-out;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-morph-to-diagram {
+  animation: morphToDiagram 0.8s ease-in-out;
+}
+
+.animate-morph-to-code {
+  animation: morphToCode 0.8s ease-in-out;
+}
+
+.animate-float {
+  animation: floatUp 3s ease-in-out infinite;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.4s ease-out;
+}
+
+.animate-code-line {
+  animation: codeLineAppear 0.3s ease-out;
+}
+
+/* Enhanced CTA Button Animations */
+.cta-button {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: all var(--transition-smooth);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+}
+
+.cta-button:active {
+  transform: translateY(-1px) scale(0.99);
+  transition: all var(--transition-fast);
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--transition-slow);
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+.cta-button:disabled {
+  transform: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+.cta-button:disabled::before {
+  display: none;
+}
+
+/* Sliding CTA Button with Icon Animation */
+.cta-button-slide {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: all var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-button-slide:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+}
+
+.cta-button-slide:active {
+  transform: translateY(-1px) scale(0.99);
+  transition: all var(--transition-fast);
+}
+
+.cta-button-slide .button-text {
+  transition: transform var(--transition-smooth);
+  position: relative;
+  z-index: 2;
+}
+
+.cta-button-slide:hover .button-text {
+  transform: translateX(-8px);
+}
+
+.cta-button-slide .button-icon {
+  position: absolute;
+  right: 16px;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: all var(--transition-smooth);
+  z-index: 2;
+}
+
+.cta-button-slide:hover .button-icon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.cta-button-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--transition-slow);
+  z-index: 1;
+}
+
+.cta-button-slide:hover::before {
+  left: 100%;
+}
+
+.cta-button-slide:disabled {
+  transform: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+.cta-button-slide:disabled::before {
+  display: none;
+}
+
+.cta-button-slide:disabled .button-text {
+  transform: none;
+}
+
+.cta-button-slide:disabled .button-icon {
+  opacity: 0;
+}
+
+/* Navigation Link Animations */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width var(--transition-smooth);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link:hover {
+  transform: translateY(-1px);
+}
+
+/* Section transition effects */
+.section-transition {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all var(--transition-slow);
+}
+
+.section-transition.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.hover-tilt {
+  transition: transform var(--transition-normal);
+}
+
+.hover-tilt:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+}
+
+/* Focus states */
+.focus-ring {
+  transition: box-shadow var(--transition-fast);
+}
+
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(139 92 246 / 0.3);
+}
+
+/* Purple-Orange gradient backgrounds */
+.gradient-purple-orange {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.gradient-purple-orange-soft {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+}
+
+/* Smooth scrolling offset for fixed navigation */
+html {
+  scroll-padding-top: 80px;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  :root {
+    --font-size: 16px; /* Keep 16px to prevent zoom on iOS */
+  }
+
+  /* Adjust typography sizes for mobile while keeping larger header */
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: 2.5rem; /* Larger than before for prominence */
+      line-height: 1.1;
+      /* Ensure text is visible on mobile with better contrast */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      /* Add proper spacing above h1 on mobile to account for fixed navigation */
+      margin-top: 5rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      line-height: 1.4;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  }
+
+  /* Touch-friendly interactions */
+  .cta-button:hover,
+  .cta-button-slide:hover {
+    transform: scale(1.02);
+  }
+  
+  .nav-link:hover {
+    transform: none;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Ensure touch targets are at least 44px */
+  button, .nav-link, input, select, textarea {
+    min-height: 44px;
+  }
+
+  /* Prevent text zoom on iOS */
+  input, select, textarea {
+    font-size: 16px;
+  }
+
+  /* Better spacing for mobile */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Reduce animation complexity on mobile for performance */
+  .animate-float,
+  .animate-morph-to-diagram,
+  .animate-morph-to-code {
+    animation: none;
+  }
+
+  /* Ensure mobile keyboard doesn't break layout */
+  .mobile-keyboard-safe {
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for modern browsers */
+  }
+
+  /* Mobile text visibility improvements */
+  .bg-clip-text {
+    /* Fallback for mobile browsers that don't support bg-clip-text well */
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* Ensure gradient text has fallback on mobile */
+  @supports not (-webkit-background-clip: text) {
+    .bg-clip-text.text-transparent {
+      color: white !important;
+      background: none !important;
+    }
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  :root {
+    --font-size: 16px;
+  }
+
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: 2.25rem; /* Still larger for prominence */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      /* Maintain proper spacing on extra small devices */
+      margin-top: 5rem;
+    }
+
+    h2 {
+      font-size: 1.375rem;
+    }
+
+    h3 {
+      font-size: 1.125rem;
+    }
+  }
+
+  /* Tighter spacing on very small screens */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Tablet specific adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: 3.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: 4rem;
+    }
+
+    h2 {
+      font-size: 2.25rem;
+    }
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .cta-button,
+  .cta-button-slide {
+    /* Sharper shadows on high DPI */
+    filter: contrast(1.05);
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animate-float,
+  .animate-pulse-slow,
+  .animate-glow {
+    animation: none !important;
+  }
+}
+
+/* Dark mode optimizations for OLED displays */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+  }
 }
