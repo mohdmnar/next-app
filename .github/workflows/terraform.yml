@@ -40,3 +40,5 @@ jobs:
       TF_VAR_domain_alternatives: ${{ secrets.TF_VAR_domain_alternatives }}
       TF_VAR_site_bucket_name: ${{ secrets.TF_VAR_site_bucket_name }}
       TF_VAR_redirect_bucket_names: ${{ secrets.TF_VAR_redirect_bucket_names }}
+      TF_VAR_domain_alternatives_json: ${{ secrets.TF_VAR_domain_alternatives }}
+      TF_VAR_redirect_bucket_names_json: ${{ secrets.TF_VAR_redirect_bucket_names }}
