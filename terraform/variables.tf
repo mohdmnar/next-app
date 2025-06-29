@@ -27,8 +27,3 @@ variable "cloudfront_default_root_object" {
   type        = string
   default     = "index.html"
 }
-
-variable "state_bucket" {
-  description = "S3 bucket to store Terraform remote state"
-  type        = string
-}
