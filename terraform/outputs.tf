@@ -10,6 +10,6 @@ output "cloudfront_domain" {
   value = aws_cloudfront_distribution.www.domain_name
 }
 
-output "acm_validation" {
-  value = "Certificate validated: ${aws_acm_certificate_validation.cert.id}"
-}
+# output "acm_validation" {
+#   value = "Certificate validated: ${aws_acm_certificate_validation.cert.id}"
+# }

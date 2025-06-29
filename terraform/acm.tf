@@ -31,8 +31,8 @@ resource "aws_route53_record" "cert_validation" {
   allow_overwrite = true
 }
 
-resource "aws_acm_certificate_validation" "cert" {
-  provider                = aws.global
-  certificate_arn         = aws_acm_certificate.zengech.arn
-  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
-}
+# resource "aws_acm_certificate_validation" "cert" {
+#   provider                = aws.global
+#   certificate_arn         = aws_acm_certificate.zengech.arn
+#   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
+# }
