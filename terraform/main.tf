@@ -9,12 +9,12 @@ terraform {
 
   backend "s3" {
     # configure your remote state here
-    bucket = var.state_bucket
+    bucket = "zengech-remote-state"
     key    = "terraform/zengech/static-site/terraform.tfstate"
-    region = var.aws_region
+    region = "eu-west-2"
   }
 }
 
 provider "aws" {
-  region = var.aws_region
+  region = "eu-west-2"
 }
