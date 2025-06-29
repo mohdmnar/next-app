@@ -1,9 +1,8 @@
-# Alias record for root domain (zengech.co.uk)
-resource "aws_route53_record" "root" {
-  zone_id = aws_route53_zone.primary.zone_id
+# Primary domain A record alias to CloudFront
+resource "aws_route53_record" "primary_alias" {
+  zone_id = aws_route53_zone.primary.id
   name    = var.domain_primary
   type    = "A"
-
   alias {
     name                   = aws_cloudfront_distribution.cdn.domain_name
     zone_id                = aws_cloudfront_distribution.cdn.hosted_zone_id
@@ -11,12 +10,11 @@ resource "aws_route53_record" "root" {
   }
 }
 
-# Alias record for www.zengech.co.uk
-resource "aws_route53_record" "www_co_uk" {
-  zone_id = aws_route53_zone.primary.zone_id
+# Alias for www.primary
+resource "aws_route53_record" "www_alias" {
+  zone_id = aws_route53_zone.primary.id
   name    = "www.${var.domain_primary}"
   type    = "A"
-
   alias {
     name                   = aws_cloudfront_distribution.cdn.domain_name
     zone_id                = aws_cloudfront_distribution.cdn.hosted_zone_id
@@ -24,29 +22,12 @@ resource "aws_route53_record" "www_co_uk" {
   }
 }
 
-# Add CNAME/alias records for zengech.com and www.zengech.com in their own hosted zone
-# These hosted zones must exist in Route 53
-resource "aws_route53_zone" "com" {
-  name = "zengech.com"
-}
-
-resource "aws_route53_record" "zengech_com" {
-  zone_id = aws_route53_zone.com.zone_id
-  name    = "zengech.com"
-  type    = "A"
-
-  alias {
-    name                   = aws_cloudfront_distribution.cdn.domain_name
-    zone_id                = aws_cloudfront_distribution.cdn.hosted_zone_id
-    evaluate_target_health = false
-  }
-}
-
-resource "aws_route53_record" "www_zengech_com" {
-  zone_id = aws_route53_zone.com.zone_id
-  name    = "www.zengech.com"
-  type    = "A"
-
+# Secondary zones aliases (redirects handle in CloudFront alias list)
+resource "aws_route53_record" "secondary_aliases" {
+  for_each = toset(var.domain_secondary)
+  zone_id  = each.key == "www.zengech.co.uk" || each.key == var.domain_primary ? aws_route53_zone.primary.id : aws_route53_zone.secondary.id
+  name     = each.value
+  type     = "A"
   alias {
     name                   = aws_cloudfront_distribution.cdn.domain_name
     zone_id                = aws_cloudfront_distribution.cdn.hosted_zone_id

@@ -1,43 +1,34 @@
-
-variable "project_name" {
-  default = "zengech"
+variable "aws_region" {
+  description = "AWS region for all resources"
+  type        = string
+  default     = "eu-west-2"
 }
 
 variable "domain_primary" {
-  default = "zengech.co.uk"
+  description = "Primary domain"
+  type        = string
+  default     = "zengech.co.uk"
 }
 
-variable "domain_alternatives" {
-  default = [
-    "www.zengech.co.uk",
-    "zengech.com",
-    "www.zengech.com"
-  ]
+variable "domain_secondary" {
+  description = "Secondary domain to redirect"
+  type        = list(string)
+  default     = ["www.zengech.co.uk", "zengech.com", "www.zengech.com"]
 }
 
 variable "site_bucket_name" {
-  default = "zengech-co-uk-site"
-}
-
-variable "redirect_bucket_names" {
-  default = {
-    "zengech.com"       = "zengech-com-redirect"
-    "www.zengech.com"   = "zengech-www-com-redirect"
-    "www.zengech.co.uk" = "zengech-www-co-uk-redirect"
-  }
-}
-
-variable "domain_alternatives_json" {
-  description = "Domain aliases (JSON string from secrets)"
+  description = "S3 bucket name for the static site"
   type        = string
+  default     = "zengech.co.uk"
 }
 
-variable "redirect_bucket_names_json" {
-  description = "Redirect bucket mapping (JSON string from secrets)"
+variable "cloudfront_default_root_object" {
+  description = "Default root object for CloudFront"
   type        = string
+  default     = "index.html"
 }
 
-locals {
-  domain_alternatives    = jsondecode(var.domain_alternatives_json)
-  redirect_bucket_names  = jsondecode(var.redirect_bucket_names_json)
+variable "state_bucket" {
+  description = "S3 bucket to store Terraform remote state"
+  type        = string
 }
