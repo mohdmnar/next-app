@@ -1,37 +1,33 @@
 resource "aws_acm_certificate" "zengech" {
-  domain_name               = var.domain_primary
-  subject_alternative_names = concat([var.domain_primary], var.domain_secondary)
-  validation_method         = "DNS"
-
-  lifecycle {
-    create_before_destroy = true
-  }
+  provider          = aws.global
+  domain_name       = "zengech.co.uk"
+  subject_alternative_names = [
+    "www.zengech.co.uk",
+    "zengech.com",
+    "www.zengech.com"
+  ]
+  validation_method = "DNS"
 }
 
-resource "aws_route53_zone" "primary" {
-  name = var.domain_primary
-}
-
-resource "aws_route53_zone" "secondary" {
-  name = "zengech.com"
-}
-
-# DNS validation records for ACM
 resource "aws_route53_record" "cert_validation" {
   for_each = {
-    for dvo in aws_acm_certificate.zengech.domain_validation_options : dvo.domain_name => dvo
+    for dvo in aws_acm_certificate.zengech.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
   }
-  name    = each.value.resource_record_name
-  type    = each.value.resource_record_type
-  zone_id = lookup({
-    var.domain_primary = aws_route53_zone.primary.id
-    "zengech.com"     = aws_route53_zone.secondary.id
-  }, each.key)
-  records = [each.value.resource_record_value]
-  ttl     = 300
+
+  zone_id         = contains(keys(each.value), "zengech.com") ? aws_route53_zone.primary_com.zone_id : aws_route53_zone.primary_uk.zone_id
+  name            = each.value.name
+  type            = each.value.type
+  records         = [each.value.record]
+  ttl             = 300
+  allow_overwrite = true
 }
 
-resource "aws_acm_certificate_validation" "zengech" {
+resource "aws_acm_certificate_validation" "cert" {
+  provider                = aws.global
   certificate_arn         = aws_acm_certificate.zengech.arn
-  validation_record_fqdns = values(aws_route53_record.cert_validation)[*].fqdn
+  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }

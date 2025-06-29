@@ -1,31 +1,33 @@
 # Primary site bucket
-resource "aws_s3_bucket" "site" {
-  bucket = var.site_bucket_name
-  acl    = "public-read"
+resource "aws_s3_bucket" "primary" {
+  bucket = "zengech.co.uk"
+}
 
-  website {
-    index_document = var.cloudfront_default_root_object
-    error_document = "error.html"
-  }
+resource "aws_s3_bucket_website_configuration" "primary" {
+  bucket = aws_s3_bucket.primary.bucket
+  index_document { suffix = "index.html" }
+}
 
-  tags = {
-    Name = "Zengech Static Site"
+# Redirect buckets
+locals {
+  redirects = {
+    "www.zengech.co.uk" = "zengech.co.uk"
+    "zengech.com"       = "zengech.co.uk"
+    "www.zengech.com"   = "zengech.co.uk"
   }
 }
 
-# Redirect buckets for secondary domains
 resource "aws_s3_bucket" "redirect" {
-  for_each = toset(var.domain_secondary)
-  bucket   = each.value
-  acl      = "public-read"
+  for_each = local.redirects
+  bucket   = each.key
+}
 
-  website {
-    redirect_all_requests_to = {
-      host_name = var.domain_primary
-      protocol  = "https"
-    }
-  }
-  tags = {
-    Name = "Redirect ${each.value} to ${var.domain_primary}"
+resource "aws_s3_bucket_website_configuration" "redirect" {
+  for_each = local.redirects
+  bucket   = aws_s3_bucket.redirect[each.key].bucket
+
+  redirect_all_requests_to {
+    host_name = each.value
+    protocol  = "https"
   }
 }
