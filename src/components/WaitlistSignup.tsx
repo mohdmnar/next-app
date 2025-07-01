@@ -17,8 +17,18 @@ export function WaitlistSignup() {
     
     setIsLoading(true)
     
+    const form = e.target;
+    const formData = new FormData(form);
+    console.log(form)
+    console.log(formData)
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await fetch("https://formspree.io/f/xblyzkqg", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json"
+      }
+    });
     
     setIsLoading(false)
     setIsSubmitted(true)
@@ -87,6 +97,7 @@ export function WaitlistSignup() {
                   <Input
                     id="email"
                     type="email"
+                    name="email"
                     placeholder="your.email@company.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -99,7 +110,7 @@ export function WaitlistSignup() {
                   <label htmlFor="role" className="block mb-2 text-sm font-medium text-white">
                     Your Role
                   </label>
-                  <Select value={role} onValueChange={setRole} required>
+                  <Select value={role} onValueChange={setRole} required name="role">
                     <SelectTrigger className="h-12 focus-ring bg-slate-900/50 border-slate-600 text-white transition-all duration-300 hover:border-slate-500">
                       <SelectValue placeholder="Select your role" className="text-slate-400" />
                     </SelectTrigger>
