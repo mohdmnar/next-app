@@ -14,22 +14,21 @@ export function WaitlistSignup() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email || !role) return
-    
+
     setIsLoading(true)
-    
-    const form = e.target;
-    const formData = new FormData(form);
-    console.log(form)
-    console.log(formData)
-    // Simulate API call
+
+    const formData = new FormData()
+    formData.append("email", email)
+    formData.append("role", role)
+
     await fetch("https://formspree.io/f/xblyzkqg", {
       method: "POST",
       body: formData,
       headers: {
         Accept: "application/json"
       }
-    });
-    
+    })
+
     setIsLoading(false)
     setIsSubmitted(true)
   }
