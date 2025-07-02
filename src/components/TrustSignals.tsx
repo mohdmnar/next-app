@@ -69,7 +69,7 @@ export function TrustSignals() {
           ))}
         </div>
         
-        <div className="mt-16 text-center">
+        {/* <div className="mt-16 text-center">
           <div className="inline-flex items-center gap-4 bg-slate-800/50 border border-slate-700 px-6 py-3 rounded-full backdrop-blur-sm">
             <div className="flex -space-x-2">
               {[1, 2, 3, 4].map((i) => (
@@ -83,7 +83,7 @@ export function TrustSignals() {
               Join 2,500+ developers on the waitlist
             </span>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   )

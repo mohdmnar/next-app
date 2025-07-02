@@ -1,12 +1,25 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from './ui/button'
-import { ChevronRight, Cloud, Database, Settings, Zap } from 'lucide-react'
+import { ChevronRight, Cloud, Database, Settings, Zap, ChevronDown } from 'lucide-react'
 
 export function Hero() {
   const [hoveredDiagram, setHoveredDiagram] = useState(false)
   const [ctaClicked, setCtaClicked] = useState(false)
+  const [autoPlayActive, setAutoPlayActive] = useState(false)
+
+  // Auto-play functionality for code generator
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!hoveredDiagram) {
+        setAutoPlayActive(true)
+        setTimeout(() => setAutoPlayActive(false), 3000) // Show for 3 seconds
+      }
+    }, 15000) // Every 15 seconds
+
+    return () => clearInterval(interval)
+  }, [hoveredDiagram])
 
   const handleWaitlistClick = () => {
     setCtaClicked(true)
@@ -21,24 +34,49 @@ export function Hero() {
     }
   }
 
+  const scrollToFeatures = () => {
+    console.log('hit')
+    const element = document.getElementById('features')
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
+  const isCodeViewActive = hoveredDiagram || autoPlayActive
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-purple-950/20 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-background via-background to-purple-950/20 overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-slate-800 [mask-image:linear-gradient(0deg,rgba(0,0,0,0.8),rgba(0,0,0,0.4))]" />
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-1 flex items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full">
           {/* Left side - Content */}
           <div className="text-center lg:text-left animate-fade-in-up">
             {/* Mobile-optimized headline with proper spacing and better contrast */}
-            <h1 className="mb-6 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mt-20 sm:mt-16 lg:mt-0">
+            <h1 className="mb-4 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mt-20 sm:mt-16 lg:mt-0">
               <span className="block text-white mb-2">From Design to</span>
               <span className="block bg-gradient-to-r from-primary via-purple-400 to-secondary bg-clip-text text-transparent">
                 Cloud in Minutes
               </span>
             </h1>
+
+            {/* Social Proof */}
+            <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+              <p className="text-sm text-slate-400 mb-2">Built by engineers from</p>
+              <div className="flex items-center justify-center lg:justify-start gap-2 text-sm font-medium">
+                <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Google</span>
+                <span className="text-slate-500">•</span>
+                <span className="bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">BP</span>
+                <span className="text-slate-500">•</span>
+                <span className="bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent">Moonpig</span>
+              </div>
+            </div>
             
-            {/* Better mobile contrast for description */}
+            {/* Description */}
             <p className="mb-8 max-w-2xl mx-auto lg:mx-0 text-base sm:text-lg leading-relaxed text-slate-200">
               Transform your architecture diagrams into production-ready infrastructure code. 
               Generate Terraform, Azure Bicep, and CloudFormation templates with AI-powered precision.
@@ -51,7 +89,7 @@ export function Hero() {
                   ctaClicked ? 'animate-button-press' : ''
                 }`}
               >
-                <span className="button-text text-sm sm:text-base">Join the Waitlist</span>
+                <span className="button-text text-sm sm:text-base">Get Early Access</span>
                 <ChevronRight className="button-icon h-4 w-4" />
               </button>
               
@@ -70,25 +108,28 @@ export function Hero() {
                 Waitlist Open
               </span>
               <span className="hidden sm:block">•</span>
-              <span>No Credit Card Required</span>
+              <span>No Card Required</span>
             </div>
           </div>
           
-          {/* Right side - Interactive Diagram */}
+          {/* Right side - Interactive Diagram with Auto-play */}
           <div className="relative animate-fade-in-up mt-8 lg:mt-0" style={{ animationDelay: '0.2s' }}>
+            {/* Enhanced Interactive Code Generator */}
             <div 
-              className="bg-slate-800/60 backdrop-blur-sm border border-slate-600 rounded-2xl p-6 sm:p-8 shadow-2xl hover-lift cursor-pointer transition-all duration-500"
+              className={`bg-slate-800/60 backdrop-blur-sm border border-slate-600 rounded-2xl p-6 sm:p-8 shadow-2xl hover-lift cursor-pointer transition-all duration-500 ${
+                autoPlayActive ? 'ring-2 ring-primary/50 animate-glow' : ''
+              }`}
               onMouseEnter={() => setHoveredDiagram(true)}
               onMouseLeave={() => setHoveredDiagram(false)}
             >
               <div className="text-center mb-6">
                 <h3 className="text-base sm:text-lg mb-2 text-white font-medium">Architecture Visualizer</h3>
                 <p className="text-xs sm:text-sm text-slate-300">
-                  Hover to see the magic ✨
+                  {autoPlayActive ? '🤖 AI at work...' : 'Hover to see the magic ✨'}
                 </p>
               </div>
               
-              {!hoveredDiagram ? (
+              {!isCodeViewActive ? (
                 // Diagram View
                 <div className="space-y-6 transition-all duration-500">
                   <div className="flex justify-center">
@@ -127,19 +168,19 @@ export function Hero() {
                     </div>
                     
                     <div className="font-mono text-xs space-y-1 sm:space-y-2">
-                      <div className="text-purple-400 animate-slide-in-left">resource <span className="text-yellow-300">aws_instance</span> <span className="text-green-300">web_server</span> {'{'}
+                      <div className="text-purple-400 animate-slide-in-left">resource <span className="text-yellow-300">"aws_instance"</span> <span className="text-green-300">"web_server"</span> {'{'}
                       </div>
                       <div className="text-slate-300 ml-2 animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
-                        ami = <span className="text-yellow-300">ami-0c02fb55956c7d316</span>
+                        ami = <span className="text-yellow-300">"ami-0c02fb55956c7d316"</span>
                       </div>
                       <div className="text-slate-300 ml-2 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-                        instance_type = <span className="text-yellow-300">t3.micro</span>
+                        instance_type = <span className="text-yellow-300">"t3.micro"</span>
                       </div>
                       <div className="text-purple-400 animate-slide-in-left" style={{ animationDelay: '0.3s' }}>{'}'}</div>
                       
-                      <div className="text-purple-400 mt-2 sm:mt-3 animate-slide-in-left" style={{ animationDelay: '0.4s' }}>resource <span className="text-yellow-300">aws_rds_instance</span> <span className="text-green-300">database</span> {'{'}</div>
+                      <div className="text-purple-400 mt-2 sm:mt-3 animate-slide-in-left" style={{ animationDelay: '0.4s' }}>resource <span className="text-yellow-300">"aws_rds_instance"</span> <span className="text-green-300">"database"</span> {'{'}</div>
                       <div className="text-slate-300 ml-2 animate-slide-in-left" style={{ animationDelay: '0.5s' }}>
-                        engine = <span className="text-yellow-300">postgres</span>
+                        engine = <span className="text-yellow-300">"postgres"</span>
                       </div>
                       <div className="text-purple-400 animate-slide-in-left" style={{ animationDelay: '0.6s' }}>{'}'}</div>
                     </div>
@@ -162,6 +203,17 @@ export function Hero() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Scroll Cue */}
+      <div className="absolute bottom-[12%] left-1/2 transform -translate-x-1/2 animate-bounce">
+        <button 
+          onClick={() => scrollToFeatures()}
+          className="flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-colors duration-300 group"
+        >
+          <span className="text-sm">👇 See how it works</span>
+          <ChevronDown className="h-5 w-5 group-hover:translate-y-1 transition-transform duration-300" />
+        </button>
       </div>
     </section>
   )

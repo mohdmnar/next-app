@@ -140,7 +140,7 @@ export function BetaSignup() {
                 <div className="flex items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
                   <span className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500" />
-                    No credit card required
+                    No card required
                   </span>
                   <span className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500" />

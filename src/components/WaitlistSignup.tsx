@@ -1,29 +1,62 @@
 'use client'
 
 import { useState } from 'react'
+import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
-import { CheckCircle, Mail } from 'lucide-react'
+import { CheckCircle, Mail, Gift } from 'lucide-react'
+import { Label } from './ui/label'
+import { Checkbox } from './ui/checkbox'
+
+
+const roles = [
+  'Architect',
+  'DevOps Engineer', 
+  'Solo Founder',
+  'Consultant',
+  'Engineering Manager',
+  'Platform Engineer',
+  'Site Reliability Engineer',
+  'Other'
+]
+
+const useCases = [
+  'Multi-cloud infrastructure',
+  'Microservices architecture',
+  'Disaster recovery planning',
+  'Infrastructure standardization',
+  'Team collaboration',
+  'Client projects'
+]
 
 export function WaitlistSignup() {
-  const [email, setEmail] = useState('')
-  const [role, setRole] = useState('')
+  const [formData, setFormData] = useState({
+    email: '',
+    role: '',
+    useCases: [] as string[],
+    referralCode: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [showReferralCode, setShowReferralCode] = useState(false)
+
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email || !role) return
+    if (!formData.email) return
 
     setIsLoading(true)
 
-    const formData = new FormData()
-    formData.append("email", email)
-    formData.append("role", role)
+    const data = new FormData()
+    data.append("email", formData.email)
+    data.append("role", formData.role)
+    data.append("use_cases", formData.useCases.join(','))
+    data.append("referralCode", formData.referralCode)
 
     await fetch("https://formspree.io/f/xblyzkqg", {
       method: "POST",
-      body: formData,
+      body: data,
       headers: {
         Accept: "application/json"
       }
@@ -33,34 +66,37 @@ export function WaitlistSignup() {
     setIsSubmitted(true)
   }
 
+  const handleUseCaseChange = (useCase: string, checked: boolean) => {
+    if (checked) {
+      setFormData(prev => ({
+        ...prev,
+        useCases: [...prev.useCases, useCase]
+      }))
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        useCases: prev.useCases.filter(item => item !== useCase)
+      }))
+    }
+  }
+
   if (isSubmitted) {
     return (
-      <section className="py-24 bg-gradient-to-br from-purple-950/30 to-orange-950/30">
-        <div className="container mx-auto px-6 lg:px-8">
+      <section className="py-20 sm:py-24 lg:py-32 bg-gradient-to-b from-background to-slate-950/50 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-2xl mx-auto text-center">
-            <div className="mb-8 animate-fade-in-up">
-              <CheckCircle className="h-16 w-16 text-green-400 mx-auto mb-4 animate-fade-in-down" />
-              <h2 className="mb-4 text-white">You&apos;re on the waitlist! 🎉</h2>
-              <p className="text-lg text-slate-300 mb-6">
-                Welcome to the Zengech waitlist. We&apos;ll notify you as soon as early access is available.
-              </p>
-              <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur-sm hover-lift">
-                <h3 className="mb-3 text-white">What happens next?</h3>
-                <div className="space-y-3 text-left">
-                  <div className="flex items-center gap-3 animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
-                    <div className="w-2 h-2 bg-primary rounded-full"></div>
-                    <span className="text-sm text-slate-300">Confirmation sent to <strong className="text-white">{email}</strong></span>
-                  </div>
-                  <div className="flex items-center gap-3 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                    <span className="text-sm text-slate-300">Early access invitation when we launch</span>
-                  </div>
-                  <div className="flex items-center gap-3 animate-slide-in-left" style={{ animationDelay: '0.3s' }}>
-                    <div className="w-2 h-2 bg-accent rounded-full"></div>
-                    <span className="text-sm text-slate-300">Exclusive updates and behind-the-scenes content</span>
-                  </div>
-                </div>
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-3xl p-8 sm:p-12">
+              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+                <CheckCircle className="h-8 w-8 text-white" />
               </div>
+              
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                Welcome to the Future! 🎉
+              </h2>
+              
+              <p className="text-slate-400 text-lg mb-8">
+                You&apos;re on the waitlist! We&apos;ll send you early access and exclusive updates as we get closer to launch.
+              </p>
             </div>
           </div>
         </div>
@@ -69,103 +105,160 @@ export function WaitlistSignup() {
   }
 
   return (
-    <section className="py-24 bg-gradient-to-br from-purple-950/30 to-orange-950/30">
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="mb-12">
-            <div className="inline-flex items-center gap-2 bg-purple-900/30 border border-purple-500/30 text-purple-300 px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in-down">
-              <Mail className="h-4 w-4" />
-              Join Waitlist
+    <section className="py-20 sm:py-24 lg:py-32 bg-gradient-to-b from-background to-slate-950/50 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-grid-slate-800/30 [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent)]" />
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-2xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 mb-6">
+              <Mail className="h-4 w-4 text-primary" />
+              <span className="text-sm font-medium text-primary">Join the Waitlist</span>
             </div>
-            
-            <h2 className="mb-4 text-white animate-fade-in-up">
-              Ready to transform your infrastructure workflow?
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-orange-200 bg-clip-text text-transparent">
+              Get Early Access
             </h2>
-            <p className="text-lg text-slate-300 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-              Be among the first to experience the future of infrastructure development. Join our exclusive waitlist for early access.
+            <p className="text-lg text-slate-400 leading-relaxed mb-2">
+              Be among the first to transform your infrastructure workflow with AI-powered automation.
             </p>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8 shadow-lg backdrop-blur-sm hover-lift">
-              <div className="space-y-6">
-                <div className="text-left">
-                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
-                    Email Address
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    name="email"
-                    placeholder="your.email@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="focus-ring h-12 bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 transition-all duration-300 hover:border-slate-500"
-                    required
-                  />
-                </div>
-                
-                <div className="text-left">
-                  <label htmlFor="role" className="block mb-2 text-sm font-medium text-white">
-                    Your Role
-                  </label>
-                  <Select value={role} onValueChange={setRole} required name="role">
-                    <SelectTrigger className="h-12 focus-ring bg-slate-900/50 border-slate-600 text-white transition-all duration-300 hover:border-slate-500">
-                      <SelectValue placeholder="Select your role" className="text-slate-400" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700 text-white">
-                      <SelectItem value="founder">Founder / CEO</SelectItem>
-                      <SelectItem value="architect">Solutions Architect</SelectItem>
-                      <SelectItem value="devops">DevOps Engineer</SelectItem>
-                      <SelectItem value="developer">Software Developer</SelectItem>
-                      <SelectItem value="manager">Engineering Manager</SelectItem>
-                      <SelectItem value="consultant">Consultant</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <button 
-                  type="submit" 
-                  className={`cta-button w-full h-12 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-medium shadow-lg group disabled:opacity-50 ${
-                    !email || !role || isLoading ? 'cursor-not-allowed' : ''
-                  }`}
-                  disabled={!email || !role || isLoading}
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="loading-spinner"></div>
-                      <span>Joining Waitlist...</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center gap-2">
-                      <span>Join the Waitlist</span>
-                      <div className="group-hover:translate-x-1 transition-transform duration-300">→</div>
-                    </div>
-                  )}
-                </button>
-              </div>
-              
-              <div className="mt-6 pt-6 border-t border-slate-700">
-                <div className="flex items-center justify-center gap-6 text-sm text-slate-400">
-                  <span className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400" />
-                    No spam, ever
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400" />
-                    Unsubscribe anytime
-                  </span>
-                </div>
-              </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium text-green-300">Waitlist Open – No Card Required</span>
             </div>
-          </form>
-          
-          <p className="mt-8 text-sm text-slate-500 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            By joining our waitlist, you agree to our{' '}
-            <a href="#" className="text-purple-400 hover:text-purple-300 hover:underline transition-colors duration-300">Terms of Service</a> and{' '}
-            <a href="#" className="text-purple-400 hover:text-purple-300 hover:underline transition-colors duration-300">Privacy Policy</a>.
-          </p>
+          </div>
+
+          {/* Waitlist Form */}
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-3xl p-8 sm:p-12">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Email */}
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-white font-medium">
+                  Email Address *
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@company.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                  required
+                  className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-primary focus:ring-primary h-12"
+                />
+              </div>
+
+              {/* Role */}
+              <div className="space-y-2">
+                <Label htmlFor="role" className="text-white font-medium">
+                  Your Role *
+                </Label>
+                <Select value={formData.role} onValueChange={(value) => setFormData(prev => ({ ...prev, role: value }))}>
+                  <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white h-12">
+                    <SelectValue placeholder="Select your role" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-slate-800 border-slate-600">
+                    {roles.map((role) => (
+                      <SelectItem key={role} value={role} className="text-white hover:bg-slate-700">
+                        {role}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Use Cases */}
+              <div className="space-y-3">
+                <Label className="text-white font-medium">
+                  Intended Use Cases <span className="text-slate-400 font-normal">(select all that apply)</span>
+                </Label>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {useCases.map((useCase) => (
+                    <div key={useCase} className="flex items-center space-x-3">
+                      <Checkbox
+                        id={useCase}
+                        checked={formData.useCases.includes(useCase)}
+                        onCheckedChange={(checked) => handleUseCaseChange(useCase, checked as boolean)}
+                        className="border-slate-600 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                      />
+                      <Label 
+                        htmlFor={useCase} 
+                        className="text-sm text-slate-300 cursor-pointer leading-tight"
+                      >
+                        {useCase}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Referral Code Toggle */}
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={() => setShowReferralCode(!showReferralCode)}
+                  className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+                >
+                  <Gift className="h-4 w-4" />
+                  Have a referral code?
+                </button>
+                
+                {showReferralCode && (
+                  <div className="space-y-2">
+                    <Input
+                      type="text"
+                      placeholder="Enter referral code"
+                      value={formData.referralCode}
+                      onChange={(e) => setFormData(prev => ({ ...prev, referralCode: e.target.value }))}
+                      className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-primary focus:ring-primary h-10"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                disabled={isSubmitting || !formData.email || !formData.role}
+                className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white font-medium py-4 h-auto text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+              >
+                {isSubmitting ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Joining Waitlist...</span>
+                  </div>
+                ) : (
+                  'Join the Waitlist'
+                )}
+              </Button>
+
+              {/* Additional Info */}
+              <div className="text-center text-sm text-slate-400 space-y-2">
+                <p>🎯 First 100 users get 50% off for life</p>
+                <p>🚀 Priority access and onboarding support</p>
+                <p className="text-xs">
+                  By joining, you agree to our{' '}
+                  <a href="#" className="text-primary hover:underline">Terms</a> and{' '}
+                  <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+                </p>
+              </div>
+            </form>
+          </div>
+
+          {/* Social Proof */}
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-slate-800/50 border border-slate-700">
+              <div className="flex -space-x-2">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 border-2 border-slate-800"></div>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-cyan-500 border-2 border-slate-800"></div>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-500 border-2 border-slate-800"></div>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 border-2 border-slate-800"></div>
+              </div>
+              <span className="text-sm text-slate-300 font-medium">
+                Join the engineers already on the list
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

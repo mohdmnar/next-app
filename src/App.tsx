@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, User } from 'lucide-react'
 import { Hero } from './components/Hero'
 import { TrustSignals } from './components/TrustSignals'
 import { FeatureHighlights } from './components/FeatureHighlights'
 import { PersonaSnapshots } from './components/PersonaSnapshots'
+import { ConversionSection } from './components/ConversionSection'
 import { WaitlistSignup } from './components/WaitlistSignup'
 import { Footer } from './components/Footer'
 
@@ -15,7 +16,7 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'features', 'personas', 'waitlist']
+      const sections = ['hero', 'features', 'personas', 'conversion', 'waitlist']
       const scrollPosition = window.scrollY + 100
 
       for (const section of sections) {
@@ -79,7 +80,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Navigation - Enhanced with mobile menu */}
+      {/* Enhanced Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -91,11 +92,11 @@ export default function App() {
                 Zengech
               </button>
               
-              {/* Desktop Navigation */}
+              {/* Desktop Navigation with enhanced hover effects */}
               <nav className="hidden md:flex items-center gap-6">
                 <button 
                   onClick={() => scrollToSection('features')}
-                  className={`nav-link text-sm transition-colors ${
+                  className={`nav-link text-sm transition-all duration-300 relative ${
                     activeSection === 'features' ? 'text-white' : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -103,7 +104,7 @@ export default function App() {
                 </button>
                 <button 
                   onClick={() => scrollToSection('personas')}
-                  className={`nav-link text-sm transition-colors ${
+                  className={`nav-link text-sm transition-all duration-300 relative ${
                     activeSection === 'personas' ? 'text-white' : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -111,7 +112,7 @@ export default function App() {
                 </button>
                 <button 
                   onClick={() => scrollToSection('waitlist')}
-                  className={`nav-link text-sm transition-colors ${
+                  className={`nav-link text-sm transition-all duration-300 relative ${
                     activeSection === 'waitlist' ? 'text-white' : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -119,23 +120,24 @@ export default function App() {
                 </button>
                 <a 
                   href="#docs" 
-                  className="nav-link text-sm text-slate-400 hover:text-white transition-colors"
+                  className="nav-link text-sm text-slate-400 hover:text-white transition-all duration-300 relative"
                 >
                   Docs
                 </a>
               </nav>
             </div>
             
-            {/* Desktop CTA */}
+            {/* Enhanced Desktop CTA */}
             <div className="hidden md:flex items-center gap-4">
-              <button className="text-sm text-slate-400 hover:text-white transition-colors duration-300 hover:scale-105">
+              <button className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-all duration-300 hover:scale-105 px-3 py-2 rounded-lg hover:bg-slate-800/50">
+                <User className="h-4 w-4" />
                 Sign In
               </button>
               <button 
                 onClick={handleWaitlistClick}
-                className="cta-button bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg"
+                className="cta-button bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                Join Waitlist
+                Get Early Access
               </button>
             </div>
 
@@ -154,7 +156,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mobile Navigation Menu - Fixed positioning to prevent overlay issues */}
+        {/* Enhanced Mobile Navigation Menu */}
         {mobileMenuOpen && (
           <div className="fixed inset-0 top-16 md:hidden bg-slate-900/95 backdrop-blur-lg z-40 animate-fade-in-down">
             <div className="px-4 py-6 space-y-4 h-full overflow-y-auto">
@@ -196,14 +198,15 @@ export default function App() {
               </a>
               
               <div className="pt-4 border-t border-slate-700 space-y-3">
-                <button className="block w-full text-left px-4 py-3 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/30 transition-all duration-300">
+                <button className="flex items-center gap-2 w-full text-left px-4 py-3 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/30 transition-all duration-300">
+                  <User className="h-4 w-4" />
                   Sign In
                 </button>
                 <button 
                   onClick={handleWaitlistClick}
                   className="w-full cta-button bg-gradient-to-r from-primary to-secondary text-white px-4 py-3 rounded-lg font-medium shadow-lg"
                 >
-                  Join Waitlist
+                  Get Early Access
                 </button>
               </div>
             </div>
@@ -211,7 +214,7 @@ export default function App() {
         )}
       </nav>
 
-      {/* Main Content with smooth section transitions */}
+      {/* Main Content */}
       <main>
         <div id="hero">
           <Hero />
@@ -222,6 +225,9 @@ export default function App() {
         </div>
         <div id="personas">
           <PersonaSnapshots />
+        </div>
+        <div id="conversion">
+          <ConversionSection />
         </div>
         <div id="waitlist">
           <WaitlistSignup />
