@@ -2,15 +2,6 @@
 
 import { Github, Twitter, Linkedin, Mail, ExternalLink, Heart } from 'lucide-react'
 
-const companyLogos = [
-  { name: 'Google', logo: '🟦' },
-  { name: 'Microsoft', logo: '🟪' },
-  { name: 'Amazon', logo: '🟧' },
-  { name: 'Stripe', logo: '🟢' },
-  { name: 'Vercel', logo: '⚫' },
-  { name: 'Cloudflare', logo: '🟨' }
-]
-
 export function Footer() {
   const currentYear = new Date().getFullYear()
 

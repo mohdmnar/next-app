@@ -36,11 +36,11 @@ export function WaitlistSignup() {
     useCases: [] as string[],
     referralCode: ''
   })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [showReferralCode, setShowReferralCode] = useState(false)
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [,setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

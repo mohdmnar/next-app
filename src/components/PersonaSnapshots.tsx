@@ -136,13 +136,13 @@ export function PersonaSnapshots() {
                   {/* Quote */}
                   <blockquote className="relative">
                     <div className={`absolute -left-2 -top-2 text-4xl text-gradient bg-gradient-to-br ${persona.gradient} bg-clip-text text-transparent opacity-50 leading-none`}>
-                      "
+                      &quot;
                     </div>
                     <p className="text-slate-300 leading-relaxed italic text-lg pl-6 pr-2 group-hover:text-slate-200 transition-colors duration-300">
                       {persona.quote}
                     </p>
                     <div className={`absolute -right-1 -bottom-2 text-4xl text-gradient bg-gradient-to-br ${persona.gradient} bg-clip-text text-transparent opacity-50 leading-none rotate-180`}>
-                      "
+                      &quot;
                     </div>
                   </blockquote>
 

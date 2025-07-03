@@ -168,19 +168,19 @@ export function Hero() {
                     </div>
                     
                     <div className="font-mono text-xs space-y-1 sm:space-y-2">
-                      <div className="text-purple-400 animate-slide-in-left">resource <span className="text-yellow-300">"aws_instance"</span> <span className="text-green-300">"web_server"</span> {'{'}
+                      <div className="text-purple-400 animate-slide-in-left">resource <span className="text-yellow-300">aws_instance</span> <span className="text-green-300">web_server</span> {'{'}
                       </div>
                       <div className="text-slate-300 ml-2 animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
-                        ami = <span className="text-yellow-300">"ami-0c02fb55956c7d316"</span>
+                        ami = <span className="text-yellow-300">ami-0c02fb55956c7d316</span>
                       </div>
                       <div className="text-slate-300 ml-2 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-                        instance_type = <span className="text-yellow-300">"t3.micro"</span>
+                        instance_type = <span className="text-yellow-300">t3.micro</span>
                       </div>
                       <div className="text-purple-400 animate-slide-in-left" style={{ animationDelay: '0.3s' }}>{'}'}</div>
                       
-                      <div className="text-purple-400 mt-2 sm:mt-3 animate-slide-in-left" style={{ animationDelay: '0.4s' }}>resource <span className="text-yellow-300">"aws_rds_instance"</span> <span className="text-green-300">"database"</span> {'{'}</div>
+                      <div className="text-purple-400 mt-2 sm:mt-3 animate-slide-in-left" style={{ animationDelay: '0.4s' }}>resource <span className="text-yellow-300">aws_rds_instance</span> <span className="text-green-300">database</span> {'{'}</div>
                       <div className="text-slate-300 ml-2 animate-slide-in-left" style={{ animationDelay: '0.5s' }}>
-                        engine = <span className="text-yellow-300">"postgres"</span>
+                        engine = <span className="text-yellow-300">postgres</span>
                       </div>
                       <div className="text-purple-400 animate-slide-in-left" style={{ animationDelay: '0.6s' }}>{'}'}</div>
                     </div>

@@ -79,7 +79,7 @@ export function ConversionSection() {
           </h2>
           <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
             Be among the first to experience the future of infrastructure automation. 
-            Early adopters get exclusive benefits that won't be available later.
+            Early adopters get exclusive benefits that won&apos;t be available later.
           </p>
         </div>
 
