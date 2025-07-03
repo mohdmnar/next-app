@@ -6,7 +6,7 @@ import { Building2, Cog, Rocket, Users } from 'lucide-react'
 const personas = [
   {
     icon: Building2,
-    name: "Architect Anna",
+    name: "Anna",
     role: "Enterprise Solutions",
     quote: "Zengech helps me standardize our infrastructure patterns across 50+ microservices without the usual headaches.",
     company: "Fortune 500 Tech",
@@ -15,7 +15,7 @@ const personas = [
   },
   {
     icon: Cog,
-    name: "DevOps Dave",
+    name: "Dave",
     role: "Mid-Market Operations",
     quote: "Finally, a tool that speaks both architect and developer. Our deployment velocity increased 3x since adopting Zengech.",
     company: "Growing SaaS",
@@ -24,7 +24,7 @@ const personas = [
   },
   {
     icon: Rocket,
-    name: "Startup Sarah",
+    name: "Sarah",
     role: "Solo Founder & CTO",
     quote: "As a solo founder, I use Zengech to build infra faster than I can Google the docs. It's like having a senior DevOps engineer on tap.",
     company: "AI Startup",
@@ -33,7 +33,7 @@ const personas = [
   },
   {
     icon: Users,
-    name: "Freelancer Frank",
+    name: "Frank",
     role: "Cloud Consultant",
     quote: "My clients love seeing their architecture ideas become real infrastructure in minutes. Zengech makes me look like a wizard.",
     company: "Independent Consultant",
