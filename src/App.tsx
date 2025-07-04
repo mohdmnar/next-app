@@ -9,7 +9,6 @@ import { PersonaSnapshots } from './components/PersonaSnapshots'
 import { ConversionSection } from './components/ConversionSection'
 import { WaitlistSignup } from './components/WaitlistSignup'
 import { Footer } from './components/Footer'
-import Image from "next/image";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('')
