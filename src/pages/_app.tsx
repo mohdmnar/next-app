@@ -9,6 +9,7 @@ import { FeatureHighlights } from '../components/FeatureHighlights'
 import { PersonaSnapshots } from '../components/PersonaSnapshots'
 import { WaitlistSignup } from '../components/WaitlistSignup'
 import { Footer } from '../components/Footer'
+import Image from "next/image";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('')
@@ -88,6 +89,13 @@ export default function App() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-8">
+              <Image
+                src="/zengech-logo.png"
+                alt="Zengech Logo"
+                width={63}
+                height={35}
+                priority
+              />
               <button 
                 onClick={() => scrollToSection('hero')}
                 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
