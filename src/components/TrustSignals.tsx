@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from "next/image";
 
 export function TrustSignals() {
   const [isVisible, setIsVisible] = useState(false)
@@ -13,22 +14,22 @@ export function TrustSignals() {
   const providers = [
     { 
       name: 'AWS', 
-      logo: '☁️', // TODO: Replace with official AWS logo
+      logo: '/aws.png',
       description: 'Amazon Web Services'
     },
     { 
       name: 'Azure', 
-      logo: '🔷', // TODO: Replace with official Microsoft Azure logo
+      logo: '/azure.png',
       description: 'Microsoft Azure'
     },
     { 
       name: 'GCP', 
-      logo: '🌐', // TODO: Replace with official Google Cloud Platform logo
+      logo: '/gcp.png',
       description: 'Google Cloud Platform'
     },
     { 
       name: 'Terraform', 
-      logo: '🏗️', // TODO: Replace with official Terraform logo
+      logo: '/terraform.png',
       description: 'Infrastructure as Code'
     },
   ]
@@ -57,7 +58,13 @@ export function TrustSignals() {
               style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="text-4xl mb-2 transition-transform duration-300">
-                {provider.logo}
+                <Image
+                  src={provider.logo}
+                  alt={`${provider.name} Logo`}
+                  width={50}
+                  height={40}
+                  priority
+                />
               </div>
               <span className="text-sm text-slate-300 font-medium">
                 {provider.name}
@@ -68,22 +75,6 @@ export function TrustSignals() {
             </div>
           ))}
         </div>
-        
-        {/* <div className="mt-16 text-center">
-          <div className="inline-flex items-center gap-4 bg-slate-800/50 border border-slate-700 px-6 py-3 rounded-full backdrop-blur-sm">
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-orange-600 border-2 border-slate-800"
-                />
-              ))}
-            </div>
-            <span className="text-sm text-slate-400">
-              Join 2,500+ developers on the waitlist
-            </span>
-          </div>
-        </div> */}
       </div>
     </section>
   )
