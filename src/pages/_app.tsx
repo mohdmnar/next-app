@@ -90,7 +90,7 @@ export default function App() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-8">
               <Image
-                src="/zengech-logo.png"
+                src="/zengech.svg"
                 alt="Zengech Logo"
                 width={63}
                 height={35}
