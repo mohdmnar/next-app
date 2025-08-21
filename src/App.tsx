@@ -9,6 +9,7 @@ import { PersonaSnapshots } from './components/PersonaSnapshots'
 import { ConversionSection } from './components/ConversionSection'
 import { WaitlistSignup } from './components/WaitlistSignup'
 import { Footer } from './components/Footer'
+import Head from 'next/head'
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('')
@@ -79,7 +80,16 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <>
+      <Head>
+        <title>Zengech – Cloud infrastructure. Visualized, versioned, delivered.</title>
+        <meta name="description" content="Zengech turns your cloud architecture diagrams into fully generated Infrastructure as Code. Visual. Reliable. Fast." />
+        <meta property="og:title" content="Zengech – Cloud infrastructure. Visualized, versioned, delivered." />
+        <meta property="og:description" content="Zengech turns your cloud architecture diagrams into fully generated Infrastructure as Code." />
+        <meta property="og:image" content="/og-image.png" /> {/* optional, if you have one */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <div className="min-h-screen bg-background text-foreground">
       {/* Enhanced Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,7 +100,7 @@ export default function App() {
                 onClick={() => scrollToSection('hero')}
                 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
               >
-                Zengechsss
+                Zengech
               </button>
               
               {/* Desktop Navigation with enhanced hover effects */}
@@ -237,5 +247,7 @@ export default function App() {
 
       <Footer />
     </div>
+    </>
+    
   )
 }
