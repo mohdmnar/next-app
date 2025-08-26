@@ -86,11 +86,10 @@ export default function App() {
         <meta name="description" content="Zengech turns your cloud architecture diagrams into fully generated Infrastructure as Code. Visual. Reliable. Fast." />
         <meta property="og:title" content="Zengech – Cloud infrastructure. Visualized, versioned, delivered." />
         <meta property="og:description" content="Zengech turns your cloud architecture diagrams into fully generated Infrastructure as Code." />
-        <meta property="og:image" content="/og-image.png" /> {/* optional, if you have one */}
+        <meta property="og:image" content="/og-image.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="min-h-screen bg-background text-foreground">
-      {/* Enhanced Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
