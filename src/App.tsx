@@ -11,6 +11,7 @@ import { WaitlistSignup } from './components/WaitlistSignup'
 import { Footer } from './components/Footer'
 import Head from 'next/head'
 
+
 export default function App() {
   const [activeSection, setActiveSection] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
