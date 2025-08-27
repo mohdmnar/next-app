@@ -1,5 +1,5 @@
 // pages/index.jsx
-import App from '../app/app'  // Adjust the import path based on your file structure
+import App from '../src/app'  // Import from src directory
 
 export default function Home() {
   return <App />
